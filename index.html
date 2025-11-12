@@ -1171,6 +1171,22 @@
             }
         }
 
+        // Smooth scroll to premium section
+        function scrollToPremium() {
+            const premiumTab = document.querySelector('[data-tab="premium"]');
+            if (premiumTab) {
+                // Click the premium tab to switch to it
+                premiumTab.click();
+                // Scroll to the premium section
+                setTimeout(() => {
+                    const premiumSection = document.querySelector('.premium-section');
+                    if (premiumSection) {
+                        premiumSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        }
+
         // Scroll to features
         function scrollToFeatures() {
             const featuresSection = document.getElementById('features');
