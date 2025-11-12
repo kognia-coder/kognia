@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kognia — Study Smarter</title>
+  <style>
+    /* --- Basic styling (responsive, clean) --- */
+    :root{
+      --bg:#0f1724; --card:#111827; --muted:#9ca3af; --accent:#7c3aed;
+      --glass: rgba(255,255,255,0.03);
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue"; margin:0; background:linear-gradient(180deg,#071028 0%, #071a2b 100%); color:#e6eef8; padding:24px;}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#5b21b6,#06b6d4);display:grid;place-items:center;font-weight:700}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+    main{display:grid;grid-template-columns:1fr;gap:16px;max-width:1100px;margin:18px auto}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+    .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03)}
+    .muted{color:var(--muted);font-size:13px}
+    button{background:var(--accent);border:0;padding:10px 12px;border-radius:8px;color:white;cursor:pointer;font-weight:600}
+    input[type="text"]{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+    .row{display:flex;gap:8px;align-items:center}
+    .small{font-size:13px}
+    .feature-locked{opacity:0.7;filter:grayscale(0.15)}
+    .tag{display:inline-block;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.03);font-size:12px}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px;color:var(--muted);cursor:pointer}
+    .hidden{display:none !important}
+    .center{display:grid;place-items:center}
+    footer{margin-top:26px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* responsive smaller text */
+    @media (max-width:420px){ h1{font-size:18px} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">K</div>
+    <div>
+      <h1>Kognia</h1>
+      <p class="lead">Study tools + unlockable premium features</p>
+    </div>
+    <div style="margin-left:auto" class="tag">Static • GitHub Pages</div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <strong>Welcome</strong>
+          <div class="muted">Choose a tool and level up with promo-only features.</div>
+        </div>
+        <div class="row">
+          <button id="buyBtn">Buy promo ($250)</button>
+          <button id="enterPromoBtn" class="nav-btn">Enter promo</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <!-- Flashcards (some premium features) -->
+      <div class="card" id="flashcardsCard">
+        <strong>Flashcards</strong>
+        <div class="muted small">Create, shuffle, and test yourself.</div>
+        <div style="margin-top:10px">
+          <textarea id="flashInput" rows="3" placeholder="Enter cards, one per line: Front — Back" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:inherit"></textarea>
+          <div style="display:flex;margin-top:8px;gap:8px">
+            <button id="loadFlash">Load</button>
+            <button id="startFlash">Start Practice</button>
+            <button id="shuffleFlash" class="nav-btn">Shuffle (premium)</button>
+          </div>
+          <div id="flashControls" class="muted small" style="margin-top:8px"></div>
+          <div id="flashView" class="muted small" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <!-- Pomodoro -->
+      <div class="card" id="pomodoroCard">
+        <strong>Pomodoro Timer</strong>
+        <div class="muted small">Focus sessions + break reminders.</div>
+        <div style="margin-top:8px">
+          <div class="row">
+            <label class="small">Minutes:</label>
+            <input id="pomMinutes" type="text" value="25" style="width:60px"/>
+            <button id="startPom">Start</button>
+            <button id="stopPom" class="nav-btn">Stop</button>
+          </div>
+          <div id="pomDisplay" class="muted small" style="margin-top:10px"></div>
+          <div id="longBreakBtnWrap" style="margin-top:8px">
+            <button id="longBreakBtn" class="nav-btn">Start long break (premium)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Study Planner -->
+      <div class="card" id="plannerCard">
+        <strong>Study Planner</strong>
+        <div class="muted small">Quick tasks & schedule.</div>
+        <div style="margin-top:10px">
+          <input id="taskText" type="text" placeholder="Add task" />
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button id="addTask">Add</button>
+            <button id="clearTasks" class="nav-btn">Clear</button>
+            <button id="exportTasks" class="nav-btn">Export (premium)</button>
+          </div>
+          <ul id="tasksList" style="margin-top:10px"></ul>
+        </div>
+      </div>
+
+      <!-- Premium-only: Study Themes / Statistics -->
+      <div class="card feature-locked" id="premiumCard">
+        <strong>Premium Dashboard</strong>
+        <div class="muted small">Unlock themes, session stats, and advanced shuffle.</div>
+        <div style="margin-top:10px">
+          <div id="premiumStatus" class="muted small">Status: <span id="premiumFlag">Locked</span></div>
+          <div id="premiumActions" style="margin-top:10px">
+            <button id="themeBtn" class="nav-btn">Switch theme (premium)</button>
+            <button id="statsBtn" class="nav-btn">View stats (premium)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <strong>Account & Promo</strong>
+      <div class="muted small" style="margin-top:8px">Promo code status is stored on this browser.</div>
+
+      <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+        <input id="promoInput" type="text" placeholder="Enter promo code" />
+        <button id="applyPromo">Apply</button>
+        <button id="clearPromo" class="nav-btn">Clear</button>
+      </div>
+
+      <div id="promoMessage" class="muted small" style="margin-top:10px"></div>
+    </section>
+
+    <footer>
+      Kognia • Simple study toolkit — Promo codes are issued manually by you. Host on GitHub Pages by adding this repo and enabling Pages.
+    </footer>
+  </main>
+
+  <script>
+    /* -------------------------
+       Client logic (reads valid_codes.json)
+       ------------------------- */
+
+    const API = {
+      validCodesURL: '/valid_codes.json' // place generated file at repo root
+    };
+
+    // State
+    let flashcards = [];
+    let flashIndex = 0;
+    let flashFlipped = false;
+    let pomTimer = null;
+    let premium = false;
+
+    // DOM
+    const promoInput = document.getElementById('promoInput');
+    const applyPromo = document.getElementById('applyPromo');
+    const promoMessage = document.getElementById('promoMessage');
+    const premiumFlag = document.getElementById('premiumFlag');
+    const buyBtn = document.getElementById('buyBtn');
+    const enterPromoBtn = document.getElementById('enterPromoBtn');
+
+    // Helpers: persist premium flag
+    function savePremium(val){
+      localStorage.setItem('kognia_premium', val ? '1' : '0');
+      premium = !!val;
+      renderPremium();
+    }
+    function loadPremium(){
+      premium = localStorage.getItem('kognia_premium') === '1';
+      renderPremium();
+    }
+    function renderPremium(){
+      premiumFlag.textContent = premium ? 'Unlocked' : 'Locked';
+      document.querySelectorAll('.feature-locked').forEach(el=>{
+        el.style.opacity = premium ? '1' : '0.7';
+        el.style.filter = premium ? 'none' : 'grayscale(0.15)';
+      });
+    }
+
+    // Load list of valid codes (fetched from repo root valid_codes.json)
+    async function fetchValidCodes(){
+      try {
+        const res = await fetch(API.validCodesURL, {cache: 'no-store'});
+        if(!res.ok) throw new Error('no codes file');
+        const data = await res.json();
+        return data.codes || [];
+      } catch(e){
+        // If file not found or fetch blocked, support offline manual codes from localStorage
+        console.warn('Could not fetch valid_codes.json:', e);
+        const fallback = JSON.parse(localStorage.getItem('kognia_valid_codes') || '[]');
+        return fallback;
+      }
+    }
+
+    // Apply promo: verifies against valid_codes.json
+    applyPromo.addEventListener('click', async ()=>{
+      const code = (promoInput.value || '').trim();
+      if(!code){ promoMessage.textContent = 'Enter a code.'; return; }
+      promoMessage.textContent = 'Checking code...';
+      const codes = await fetchValidCodes();
+      const ok = codes.includes(code);
+      if(ok){
+        savePremium(true);
+        promoMessage.textContent = 'Promo accepted — premium unlocked 🎉';
+        // store that this user used code (not consuming server-side because static)
+        localStorage.setItem('kognia_used_code', code);
+      } else {
+        promoMessage.textContent = 'Code invalid.';
+      }
+    });
+
+    // Clear promo
+    document.getElementById('clearPromo').addEventListener('click', ()=>{
+      promoInput.value = '';
+      localStorage.removeItem('kognia_used_code');
+      savePremium(false);
+      promoMessage.textContent = 'Promo cleared.';
+    });
+
+    // "Buy promo" -> ALWAYS show maintenance (per request)
+    buyBtn.addEventListener('click', ()=>{
+      alert('Purchase flow currently undergoing maintenance. Please check back later.');
+    });
+
+    // Quick modal for entering promo (same as input)
+    enterPromoBtn.addEventListener('click', ()=> {
+      promoInput.focus();
+      promoInput.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+
+    // Flashcards logic
+    document.getElementById('loadFlash').addEventListener('click', ()=>{
+      const raw = document.getElementById('flashInput').value.trim();
+      flashcards = raw.split('\\n').map(l=>{
+        const sep = l.split('—');
+        if(sep.length>=2) return {q: sep[0].trim(), a: sep.slice(1).join('—').trim()};
+        return {q: l.trim(), a: ''};
+      }).filter(x=>x.q);
+      flashIndex = 0;
+      flashFlipped = false;
+      document.getElementById('flashControls').textContent = flashcards.length ? `${flashcards.length} cards loaded` : 'No cards loaded';
+      renderFlash();
+    });
+
+    document.getElementById('startFlash').addEventListener('click', ()=>{
+      if(!flashcards.length){ alert('Load some cards first.'); return; }
+      flashIndex = 0; flashFlipped = false;
+      renderFlash();
+    });
+
+    document.getElementById('shuffleFlash').addEventListener('click', ()=>{
+      if(!premium){ alert('Shuffle is premium — unlock with a promo code.'); return; }
+      for(let i = flashcards.length -1; i>0; i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+      }
+      flashIndex = 0; renderFlash();
+      document.getElementById('flashControls').textContent = 'Shuffled deck';
+    });
+
+    function renderFlash(){
+      const view = document.getElementById('flashView');
+      if(!flashcards.length){ view.textContent = ''; return; }
+      const c = flashcards[flashIndex];
+      view.innerHTML = '<div style="padding:10px;border-radius:8px;background:var(--glass)"><div style="font-weight:700">'+escapeHtml(c.q)+'</div><div style="margin-top:8px;color:var(--muted)">'+(flashFlipped?escapeHtml(c.a):'<i>Click to flip</i>')+'</div></div>';
+      view.onclick = ()=>{
+        flashFlipped = !flashFlipped;
+        if(!flashFlipped) flashIndex = (flashIndex + 1) % flashcards.length;
+        renderFlash();
+      };
+    }
+
+    // Pomodoro
+    function updatePomDisplay(txt){ document.getElementById('pomDisplay').textContent = txt; }
+    document.getElementById('startPom').addEventListener('click', ()=>{
+      const mins = parseFloat(document.getElementById('pomMinutes').value) || 25;
+      startPom(mins * 60);
+    });
+    document.getElementById('stopPom').addEventListener('click', stopPom);
+    document.getElementById('longBreakBtn').addEventListener('click', ()=>{
+      if(!premium){ alert('Long break is premium — unlock with a promo code.'); return; }
+      startPom(15*60);
+    });
+
+    function startPom(sec){
+      stopPom();
+      let remaining = Math.max(5, Math.floor(sec));
+      updatePomDisplay(formatTime(remaining));
+      pomTimer = setInterval(()=>{
+        remaining--;
+        updatePomDisplay(formatTime(remaining));
+        if(remaining<=0){ stopPom(); alert('Session finished!'); }
+      }, 1000);
+    }
+    function stopPom(){ if(pomTimer) clearInterval(pomTimer); pomTimer=null; updatePomDisplay('Stopped'); }
+
+    function formatTime(s){
+      const m = Math.floor(s/60); const sec = s%60;
+      return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+    }
+
+    // Planner tasks (simple persistent list)
+    const tasksKey = 'kognia_tasks_v1';
+    function loadTasks(){
+      const t = JSON.parse(localStorage.getItem(tasksKey) || '[]');
+      const ul = document.getElementById('tasksList'); ul.innerHTML='';
+      t.forEach((task, i)=>{
+        const li = document.createElement('li');
+        li.style.marginTop = '6px';
+        li.innerHTML = `<span>${escapeHtml(task)}</span> <button data-i="${i}" style="margin-left:10px" class="nav-btn small">Done</button>`;
+        ul.appendChild(li);
+      });
+      ul.querySelectorAll('button[data-i]').forEach(b=>{
+        b.addEventListener('click', (ev)=>{
+          const i = Number(b.getAttribute('data-i'));
+          t.splice(i,1);
+          localStorage.setItem(tasksKey, JSON.stringify(t));
+          loadTasks();
+        });
+      });
+    }
+    document.getElementById('addTask').addEventListener('click', ()=>{
+      const v = document.getElementById('taskText').value.trim();
+      if(!v) return;
+      const t = JSON.parse(localStorage.getItem(tasksKey) || '[]');
+      t.push(v);
+      localStorage.setItem(tasksKey, JSON.stringify(t));
+      document.getElementById('taskText').value = '';
+      loadTasks();
+    });
+    document.getElementById('clearTasks').addEventListener('click', ()=>{
+      if(!confirm('Clear all tasks?')) return;
+      localStorage.removeItem(tasksKey);
+      loadTasks();
+    });
+    document.getElementById('exportTasks').addEventListener('click', ()=>{
+      if(!premium){ alert('Export is premium — unlock with a promo code.'); return; }
+      const t = JSON.parse(localStorage.getItem(tasksKey)||'[]');
+      const blob = new Blob([t.join('\\n')], {type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download='kognia_tasks.txt';
+      a.click(); URL.revokeObjectURL(url);
+    });
+
+    // Premium actions
+    document.getElementById('themeBtn').addEventListener('click', ()=>{
+      if(!premium){ alert('Theme switching is premium — unlock with a promo code.'); return; }
+      document.documentElement.style.setProperty('--accent', getRandomAccent());
+      alert('Theme applied!');
+    });
+    document.getElementById('statsBtn').addEventListener('click', ()=>{
+      if(!premium){ alert('Stats are premium — unlock with a promo code.'); return; }
+      // Simple example: count tasks and cards
+      const tasks = JSON.parse(localStorage.getItem(tasksKey) || '[]').length;
+      const cards = flashcards.length;
+      alert(`Stats — tasks: ${tasks}, flashcards loaded: ${cards}`);
+    });
+
+    // Utils
+    function escapeHtml(s){ return (s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+    function getRandomAccent(){
+      const arr = ['#ef4444','#f59e0b','#10b981','#7c3aed','#06b6d4','#ec4899'];
+      return arr[Math.floor(Math.random()*arr.length)];
+    }
+
+    // init
+    (function init(){
+      loadPremium();
+      loadTasks();
+      // If valid_codes.json isn't present yet, show small hint in promoMessage
+      fetch(API.validCodesURL, {cache:'no-store'}).then(r=>{
+        if(!r.ok) promoMessage.textContent = 'No valid_codes.json found — create one with the generator and add it to repo root.';
+      }).catch(()=>{ promoMessage.textContent = 'No valid_codes.json found — create one with the generator and add it to repo root.'});
+      // if user has used code before, try to apply it locally (best effort)
+      const used = localStorage.getItem('kognia_used_code');
+      if(used){ promoInput.value = used; promoMessage.textContent = 'Previously used code loaded — re-apply to verify.'; }
+    })();
+  </script>
+</body>
+</html>
