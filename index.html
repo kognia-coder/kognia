@@ -526,46 +526,7 @@
         // Valid codes follow pattern: KOG-XXXXX-YY where YY is checksum
         function validatePromoCode(code) {
             code = code.toUpperCase().trim();
-            
-            // Check format
-            if (!code.startsWith('KOG-')) return false;
-            
-            const parts = code.split('-');
-            if (parts.length !== 3) return false;
-            
-            const base = parts[1];
-            const checksum = parts[2];
-            
-            // Calculate checksum (sum of char codes % 100)
-            let sum = 0;
-            for (let char of base) {
-                sum += char.charCodeAt(0);
-            }
-            const expectedChecksum = (sum % 100).toString().padStart(2, '0');
-            
-            return checksum === expectedChecksum;
-        }
-
-        // Generate a valid promo code (for admin use)
-        function generatePromoCode() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let base = '';
-            for (let i = 0; i < 5; i++) {
-                base += chars[Math.floor(Math.random() * chars.length)];
-            }
-            
-            let sum = 0;
-            for (let char of base) {
-                sum += char.charCodeAt(0);
-            }
-            const checksum = (sum % 100).toString().padStart(2, '0');
-            
-            return `KOG-${base}-${checksum}`;
-        }
-
-        // Check if user has premium
-        function isPremium() {
-            return localStorage.getItem('kogniaPremium') === 'true';
+            return code === 'KOGNIA25';
         }
 
         // Activate premium
@@ -727,9 +688,8 @@
         // Initialize
         updatePremiumUI();
 
-        // Log a sample promo code to console for testing
-        console.log('Sample valid promo code:', generatePromoCode());
-        console.log('To generate codes, use: generatePromoCode() in console');
+        // Log the valid promo code to console for testing
+        console.log('The valid promo code is: KOGNIA25');
     </script>
 </body>
 </html>
