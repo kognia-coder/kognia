@@ -826,7 +826,7 @@
                     <button class="btn btn-secondary btn-lg" id="resetBtn">
                         <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
                         </svg>
                         Reset
                     </button>
@@ -967,7 +967,8 @@
 
         <!-- Premium Tab -->
         <div class="tab-content" data-content="premium">
-            <div class="premium-section">
+            <div class="premium-section" id="premiumSection">
+                <!-- Show promo code entry form -->
                 <div class="modal-icon">⭐</div>
                 <h2 class="premium-title">Unlock Premium Features</h2>
                 <p class="premium-description">Get access to advanced analytics, custom themes, task management, and more to supercharge your productivity.</p>
@@ -1057,6 +1058,110 @@
             localStorage.setItem('kogniaPremium', 'true');
             markCodeAsUsed(code);
             updatePremiumUI();
+            updatePremiumSection();
+        }
+
+        function updatePremiumSection() {
+            const premiumSection = document.getElementById('premiumSection');
+            const premium = isPremium();
+            
+            if (premium) {
+                // Show premium active message
+                premiumSection.innerHTML = `
+                    <div class="modal-icon">✅</div>
+                    <h2 class="premium-title">Premium Active</h2>
+                    <p class="premium-description">You have successfully unlocked all premium features! Enjoy advanced statistics, custom themes, and task management tools.</p>
+                    
+                    <div class="premium-feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-content">
+                                <h3>Advanced Statistics</h3>
+                                <p>Track your study progress with detailed analytics and productivity insights.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎨</div>
+                            <div class="feature-content">
+                                <h3>Custom Themes</h3>
+                                <p>Personalize your workspace with beautiful color themes.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✅</div>
+                            <div class="feature-content">
+                                <h3>Task Manager</h3>
+                                <p>Organize your study tasks and assignments efficiently.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Show promo code entry form
+                premiumSection.innerHTML = `
+                    <div class="modal-icon">⭐</div>
+                    <h2 class="premium-title">Unlock Premium Features</h2>
+                    <p class="premium-description">Get access to advanced analytics, custom themes, task management, and more to supercharge your productivity.</p>
+                    
+                    <div class="promo-form">
+                        <input type="text" class="promo-input" id="promoInput" placeholder="Enter your promo code">
+                        <button class="btn btn-primary btn-lg" id="redeemBtn">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M2.5 8.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                            </svg>
+                            Redeem Code
+                        </button>
+                    </div>
+
+                    <div class="premium-divider">
+                        <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Don't have a promo code?</h3>
+                        <p style="margin-bottom: 1.5rem; opacity: 0.95;">Purchase premium access for just $250 and unlock all features.</p>
+                        <button class="btn btn-lg" style="background: white; color: #1e3a8a; font-weight: 700; font-size: 1.125rem;" id="purchaseBtn">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </svg>
+                            Purchase Premium - $250
+                        </button>
+                    </div>
+                `;
+                
+                // Re-attach event listeners after updating innerHTML
+                attachPremiumSectionListeners();
+            }
+        }
+
+        function attachPremiumSectionListeners() {
+            const redeemBtn = document.getElementById('redeemBtn');
+            const purchaseBtn = document.getElementById('purchaseBtn');
+            const promoInput = document.getElementById('promoInput');
+            
+            if (redeemBtn) {
+                redeemBtn.addEventListener('click', () => {
+                    const code = document.getElementById('promoInput').value;
+                    const result = validatePromoCode(code);
+                    
+                    if (result.valid) {
+                        activatePremium(code);
+                        document.getElementById('successModal').classList.add('active');
+                    } else {
+                        alert('❌ ' + result.message);
+                    }
+                });
+            }
+            
+            if (purchaseBtn) {
+                purchaseBtn.addEventListener('click', () => {
+                    document.getElementById('maintenanceModal').classList.add('active');
+                });
+            }
+            
+            if (promoInput) {
+                promoInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        document.getElementById('redeemBtn').click();
+                    }
+                });
+            }
         }
 
         // Update UI based on premium status
@@ -1172,22 +1277,19 @@
             updateFlashcard();
         });
 
-        // Promo code redemption
-        document.getElementById('redeemBtn').addEventListener('click', () => {
-            const code = document.getElementById('promoInput').value;
-            const result = validatePromoCode(code);
-            
-            if (result.valid) {
-                activatePremium(code);
-                document.getElementById('successModal').classList.add('active');
-            } else {
-                alert('❌ ' + result.message);
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('theme-option')) {
+                const gradient = e.target.style.background;
+                if (gradient) {
+                    // Apply theme to hero and premium sections
+                    document.querySelector('.hero').style.background = gradient;
+                    const premiumSection = document.querySelector('.premium-section');
+                    if (premiumSection) {
+                        premiumSection.style.background = gradient;
+                    }
+                    alert('✅ Theme applied successfully!');
+                }
             }
-        });
-
-        // Purchase button (shows maintenance)
-        document.getElementById('purchaseBtn').addEventListener('click', () => {
-            document.getElementById('maintenanceModal').classList.add('active');
         });
 
         // Close modals
@@ -1223,15 +1325,9 @@
             }
         });
 
-        // Enter key support for promo code input
-        document.getElementById('promoInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                document.getElementById('redeemBtn').click();
-            }
-        });
-
         // Initialize
         updatePremiumUI();
+        updatePremiumSection();
     </script>
 </body>
 </html>
