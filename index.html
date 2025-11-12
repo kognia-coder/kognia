@@ -783,8 +783,8 @@
         <div class="hero-container">
             <h1 class="hero-title">Elevate Your Study Experience</h1>
             <p class="hero-subtitle">Professional tools designed to boost your productivity and help you achieve your learning goals with confidence.</p>
-            <button class="hero-cta" onclick="scrollToFeatures()">
-                Get Started
+            <button class="hero-cta" id="goProBtn">
+                Go Pro
                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                 </svg>
@@ -1460,37 +1460,118 @@
             });
         }
 
-        function flipCard() {
-            isFlipped = !isFlipped;
-            updateFlashcard();
+function attachFlashcardListeners() {
+    document.getElementById('addFlashcardBtn')?.addEventListener('click', () => {
+        const front = document.getElementById('flashcardFront')?.value.trim();
+        const back = document.getElementById('flashcardBack')?.value.trim();
+        
+        if (front && back) {
+            flashcards.push({ front, back });
+            saveUserFlashcards(flashcards);
+            currentCard = flashcards.length - 1;
+            const frontInput = document.getElementById('flashcardFront');
+            const backInput = document.getElementById('flashcardBack');
+            if (frontInput) frontInput.value = '';
+            if (backInput) backInput.value = '';
+            renderFlashcardUI();
+            alert('✅ Flashcard added successfully!');
+        } else {
+            alert('❌ Please fill in both front and back of the flashcard.');
         }
+    });
+    
+    document.getElementById('flipCard')?.addEventListener('click', () => {
+        isFlipped = !isFlipped;
+        updateFlashcard();
+    });
+    
+    document.getElementById('nextCard')?.addEventListener('click', () => {
+        if (flashcards.length > 0) {
+            currentCard = (currentCard + 1) % flashcards.length;
+            isFlipped = false;
+            updateFlashcard();
+            renderFlashcardUI();
+        }
+    });
+    
+    document.getElementById('prevCard')?.addEventListener('click', () => {
+        if (flashcards.length > 0) {
+            currentCard = currentCard === 0 ? flashcards.length - 1 : currentCard - 1;
+            isFlipped = false;
+            updateFlashcard();
+            renderFlashcardUI();
+        }
+    });
+    
+    document.getElementById('deleteCard')?.addEventListener('click', () => {
+        if (flashcards.length > 0 && confirm('Are you sure you want to delete this flashcard?')) {
+            flashcards.splice(currentCard, 1);
+            saveUserFlashcards(flashcards);
+            if (currentCard >= flashcards.length) {
+                currentCard = Math.max(0, flashcards.length - 1);
+            }
+            isFlipped = false;
+            renderFlashcardUI();
+        }
+    });
+}
 
-        // Theme picker with click functionality
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('theme-option')) {
-                const gradient = e.target.style.background;
-                if (gradient) {
-                    // Apply theme to hero and premium sections
-                    document.querySelector('.hero').style.background = gradient;
-                    const premiumSection = document.querySelector('.premium-section');
-                    if (premiumSection) {
-                        premiumSection.style.background = gradient;
+// Theme picker with click functionality
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('theme-option')) {
+        const gradient = e.target.style.background;
+        if (gradient) {
+            // Apply theme to hero and premium sections
+            const hero = document.querySelector('.hero');
+            const premiumSection = document.querySelector('.premium-section');
+            if (hero) hero.style.background = gradient;
                     }
                     alert('✅ Theme applied successfully!');
                 }
             }
         });
 
-        // Close modals
-        document.getElementById('closeMaintenanceModal').addEventListener('click', () => {
-            document.getElementById('maintenanceModal').classList.remove('active');
-        });
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event for Go Pro button
+            const goProBtn = document.getElementById('goProBtn');
+            if (goProBtn) {
+                goProBtn.addEventListener('click', function() {
+                    const premiumTab = document.querySelector('[data-tab="premium"]');
+                    if (premiumTab) {
+                        premiumTab.click();
+                        setTimeout(() => {
+                            const premiumSection = document.querySelector('.premium-section');
+                            if (premiumSection) {
+                                premiumSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }, 100);
+                    }
+                });
+            }
 
-        document.getElementById('closeSuccessModal').addEventListener('click', () => {
-            document.getElementById('successModal').classList.remove('active');
-            // Switch to stats tab to show premium features
-            document.querySelector('[data-tab="stats"]').click();
-        });
+            // Close modals
+            const closeMaintenanceModal = document.getElementById('closeMaintenanceModal');
+            const closeSuccessModal = document.getElementById('closeSuccessModal');
+            
+            if (closeMaintenanceModal) {
+                closeMaintenanceModal.addEventListener('click', function() {
+                    const modal = document.getElementById('maintenanceModal');
+                    if (modal) modal.classList.remove('active');
+                });
+            }
+            
+            if (closeSuccessModal) {
+                closeSuccessModal.addEventListener('click', function() {
+                    const modal = document.getElementById('successModal');
+                    if (modal) {
+                        modal.classList.remove('active');
+                        // Switch to stats tab to show premium features
+                        const statsTab = document.querySelector('[data-tab="stats"]');
+                        if (statsTab) statsTab.click();
+                    }
+                });
+            }
 
         // Task manager
         document.getElementById('addTaskBtn').addEventListener('click', () => {
