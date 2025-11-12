@@ -526,12 +526,24 @@
         // Valid codes follow pattern: KOG-XXXXX-YY where YY is checksum
         function validatePromoCode(code) {
             code = code.toUpperCase().trim();
-            return code === 'KOGNIA25';
+            
+            // Check if code has already been used
+            if (isCodeUsed(code)) {
+                return { valid: false, message: 'This promo code has already been redeemed.' };
+            }
+            
+            // Check if code is valid
+            if (code === 'KOGNIA25') {
+                return { valid: true };
+            }
+            
+            return { valid: false, message: 'Invalid promo code. Please check and try again.' };
         }
 
         // Activate premium
-        function activatePremium() {
+        function activatePremium(code) {
             localStorage.setItem('kogniaPremium', 'true');
+            markCodeAsUsed(code);
             updatePremiumUI();
         }
 
@@ -646,11 +658,13 @@
         // Promo code redemption
         document.getElementById('redeemBtn').addEventListener('click', () => {
             const code = document.getElementById('promoInput').value;
-            if (validatePromoCode(code)) {
-                activatePremium();
+            const result = validatePromoCode(code);
+            
+            if (result.valid) {
+                activatePremium(code);
                 document.getElementById('successModal').classList.add('active');
             } else {
-                alert('❌ Invalid promo code. Please check and try again.');
+                alert('❌ ' + result.message);
             }
         });
 
@@ -691,8 +705,22 @@
         // Log the valid promo code to console for testing
         console.log('The valid promo code is: KOGNIA25');
 
+        // Check if premium is already active
         function isPremium() {
             return localStorage.getItem('kogniaPremium') === 'true';
+        }
+
+        // Check if a specific code has already been redeemed
+        function isCodeUsed(code) {
+            const usedCodes = JSON.parse(localStorage.getItem('kogniaUsedCodes') || '[]');
+            return usedCodes.includes(code.toUpperCase().trim());
+        }
+
+        // Mark a code as used
+        function markCodeAsUsed(code) {
+            const usedCodes = JSON.parse(localStorage.getItem('kogniaUsedCodes') || '[]');
+            usedCodes.push(code.toUpperCase().trim());
+            localStorage.setItem('kogniaUsedCodes', JSON.stringify(usedCodes));
         }
     </script>
 </body>
