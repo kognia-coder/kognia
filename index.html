@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kognia - Smart Study Platform</title>
+    <title>Kognia - Professional Study Platform</title>
     <style>
         * {
             margin: 0;
@@ -11,80 +11,198 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --color-background: #fafafa;
+            --color-surface: #ffffff;
+            --color-surface-elevated: #ffffff;
+            --color-border: #e5e7eb;
+            --color-text-primary: #111827;
+            --color-text-secondary: #6b7280;
+            --color-text-muted: #9ca3af;
+            --color-primary: #2563eb;
+            --color-primary-hover: #1d4ed8;
+            --color-accent: #0ea5e9;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-premium: #fbbf24;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            line-height: 1.6;
             min-height: 100vh;
-            padding: 20px;
         }
 
-        .container {
-            max-width: 1200px;
+        /* Header Navigation */
+        .header {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-container {
+            max-width: 1280px;
             margin: 0 auto;
+            padding: var(--spacing-md) var(--spacing-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        header {
-            text-align: center;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-weight: 700;
         }
 
         .premium-badge {
-            display: inline-block;
-            background: gold;
-            color: #333;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            margin-left: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #ffffff;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .main-content {
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            color: white;
+            padding: var(--spacing-2xl) var(--spacing-xl);
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            margin-bottom: var(--spacing-xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
             background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            color: var(--color-primary);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 1.125rem;
+            text-decoration: none;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
         }
 
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: var(--spacing-xl);
+        }
+
+        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #e0e0e0;
-            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-surface);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            overflow-x: auto;
+            box-shadow: var(--shadow-sm);
         }
 
         .tab {
-            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-lg);
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
-            color: #666;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            border-radius: var(--radius-md);
         }
 
         .tab:hover {
-            color: #667eea;
+            color: var(--color-primary);
+            background: rgba(37, 99, 235, 0.05);
         }
 
         .tab.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
-            font-weight: bold;
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+            font-weight: 600;
         }
 
         .tab.locked {
@@ -95,215 +213,344 @@
 
         .tab.locked::after {
             content: "🔒";
-            margin-left: 5px;
+            margin-left: var(--spacing-xs);
+            font-size: 0.75rem;
         }
 
+        /* Tab Content */
         .tab-content {
             display: none;
+            background: var(--color-surface);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            min-height: 500px;
         }
 
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.3s;
+            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(10px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
 
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-primary);
+        }
+
+        .section-description {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-xl);
+            font-size: 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Timer Section */
         .timer-section {
             text-align: center;
-            padding: 40px;
+            padding: var(--spacing-2xl) var(--spacing-xl);
         }
 
         .timer-display {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #667eea;
-            margin: 20px 0;
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin: var(--spacing-xl) 0;
             font-variant-numeric: tabular-nums;
+            letter-spacing: -0.025em;
         }
 
         .timer-controls {
             display: flex;
-            gap: 15px;
+            gap: var(--spacing-md);
             justify-content: center;
             flex-wrap: wrap;
         }
 
+        /* Buttons */
         .btn {
-            padding: 12px 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-lg);
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
+            border-radius: var(--radius-md);
+            font-size: 0.9375rem;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
         }
 
         .btn-primary {
-            background: #667eea;
+            background: var(--color-primary);
             color: white;
         }
 
         .btn-primary:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            background: var(--color-primary-hover);
+            box-shadow: var(--shadow-md);
         }
 
         .btn-secondary {
-            background: #e0e0e0;
-            color: #333;
+            background: var(--color-surface-elevated);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
         }
 
         .btn-secondary:hover {
-            background: #d0d0d0;
+            background: var(--color-background);
+            border-color: var(--color-text-muted);
         }
 
-        .btn-gold {
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+        .btn-lg {
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: 1rem;
+        }
+
+        .btn-premium {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
             color: white;
         }
 
-        .btn-gold:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(253, 160, 133, 0.4);
+        .btn-premium:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Notes Area */
+        .notes-container {
+            margin-top: var(--spacing-lg);
         }
 
         .notes-area {
             width: 100%;
-            min-height: 300px;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            min-height: 350px;
+            padding: var(--spacing-md);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
             font-size: 1rem;
+            font-family: inherit;
             resize: vertical;
+            transition: all 0.2s ease;
+            background: var(--color-background);
         }
 
         .notes-area:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
+        /* Flashcards */
         .flashcard-container {
+            max-width: 700px;
+            margin: 0 auto;
             text-align: center;
         }
 
         .flashcard {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
             color: white;
-            padding: 60px 40px;
-            border-radius: 15px;
-            min-height: 250px;
+            padding: var(--spacing-2xl);
+            border-radius: var(--radius-xl);
+            min-height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: transform 0.3s;
-            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
         }
 
         .flashcard:hover {
-            transform: scale(1.02);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
         }
 
         .flashcard-controls {
             display: flex;
-            gap: 10px;
+            gap: var(--spacing-md);
             justify-content: center;
             flex-wrap: wrap;
         }
 
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 12px;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
             text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
 
         .stat-value {
             font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-xs);
         }
 
         .stat-label {
-            opacity: 0.9;
+            color: var(--color-text-secondary);
+            font-size: 0.9375rem;
+            font-weight: 500;
         }
 
-        .promo-section {
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-            border-radius: 15px;
+        /* Premium Section */
+        .premium-section {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
             color: white;
+            text-align: center;
         }
 
-        .promo-input {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            margin-right: 10px;
-            min-width: 250px;
+        .premium-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
+        .premium-description {
+            font-size: 1.125rem;
+            margin-bottom: var(--spacing-xl);
+            opacity: 0.95;
+        }
+
+        .promo-form {
+            max-width: 500px;
+            margin: 0 auto var(--spacing-xl);
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
             justify-content: center;
         }
 
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            max-width: 500px;
-            text-align: center;
-            animation: slideUp 0.3s;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .close-modal {
-            background: #e0e0e0;
+        .promo-input {
+            flex: 1;
+            min-width: 250px;
+            padding: var(--spacing-md);
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            background: white;
+            color: var(--color-text-primary);
         }
 
-        .premium-feature {
-            background: #f5f5f5;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+        .promo-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+
+        .premium-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+
+        .premium-feature-list {
+            background: var(--color-surface);
+            color: var(--color-text-primary);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--color-text-primary);
+        }
+
+        .feature-content p {
+            color: var(--color-text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        /* Task List */
+        .task-input-group {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .task-input {
+            flex: 1;
+            padding: var(--spacing-md);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+        }
+
+        .task-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .task-list {
@@ -311,193 +558,439 @@
         }
 
         .task-item {
-            padding: 15px;
-            background: #f9f9f9;
-            margin-bottom: 10px;
-            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--color-background);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+            transition: all 0.2s ease;
+        }
+
+        .task-item:hover {
+            box-shadow: var(--shadow-sm);
         }
 
         .task-item input[type="checkbox"] {
             width: 20px;
             height: 20px;
             cursor: pointer;
+            accent-color: var(--color-primary);
         }
 
-        .theme-picker {
+        .task-item span {
+            flex: 1;
+            color: var(--color-text-primary);
+        }
+
+        /* Theme Picker */
+        .theme-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
         }
 
         .theme-option {
-            height: 80px;
-            border-radius: 10px;
+            height: 100px;
+            border-radius: var(--radius-lg);
             cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.3s;
+            border: 3px solid var(--color-border);
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
         }
 
         .theme-option:hover {
             transform: scale(1.05);
-            border-color: #667eea;
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-md);
         }
 
-        .success-message {
-            background: #4caf50;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-xl);
         }
 
-        .error-message {
-            background: #f44336;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--color-surface);
+            padding: var(--spacing-2xl);
+            border-radius: var(--radius-xl);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+            box-shadow: var(--shadow-xl);
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(50px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .modal-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-primary);
+        }
+
+        .modal-description {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-xl);
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .timer-display {
+                font-size: 3.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .nav-tabs {
+                padding: var(--spacing-sm);
+            }
+
+            .tab {
+                padding: var(--spacing-xs) var(--spacing-md);
+                font-size: 0.875rem;
+            }
+
+            .container {
+                padding: var(--spacing-md);
+            }
+
+            .promo-form {
+                flex-direction: column;
+            }
+
+            .promo-input {
+                min-width: 100%;
+            }
+        }
+
+        /* Utility Classes */
+        .mb-lg {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .mt-lg {
+            margin-top: var(--spacing-lg);
+        }
+
+        .text-center {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>
-                Kognia
-                <span class="premium-badge" id="premiumBadge" style="display: none;">PREMIUM</span>
-            </h1>
-            <p class="tagline">Your AI-Powered Study Companion</p>
-        </header>
-
-        <div class="main-content">
-            <div class="nav-tabs">
-                <button class="tab active" data-tab="timer">⏱️ Pomodoro Timer</button>
-                <button class="tab" data-tab="notes">📝 Quick Notes</button>
-                <button class="tab" data-tab="flashcards">🎴 Flashcards</button>
-                <button class="tab locked" data-tab="stats">📊 Advanced Stats</button>
-                <button class="tab locked" data-tab="themes">🎨 Custom Themes</button>
-                <button class="tab locked" data-tab="tasks">✅ Task Manager</button>
-                <button class="tab" data-tab="premium">⭐ Go Premium</button>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">K</div>
+                <span>Kognia</span>
+            </a>
+            <div id="premiumBadge" style="display: none;">
+                <span class="premium-badge">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                    </svg>
+                    Premium
+                </span>
             </div>
+        </div>
+    </header>
 
-            <!-- Pomodoro Timer Tab -->
-            <div class="tab-content active" data-content="timer">
-                <div class="timer-section">
-                    <h2>Pomodoro Timer</h2>
-                    <div class="timer-display" id="timerDisplay">25:00</div>
-                    <div class="timer-controls">
-                        <button class="btn btn-primary" id="startBtn">Start</button>
-                        <button class="btn btn-secondary" id="pauseBtn">Pause</button>
-                        <button class="btn btn-secondary" id="resetBtn">Reset</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1 class="hero-title">Elevate Your Study Experience</h1>
+            <p class="hero-subtitle">Professional tools designed to boost your productivity and help you achieve your learning goals with confidence.</p>
+            <button class="hero-cta" onclick="scrollToFeatures()">
+                Get Started
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container" id="features">
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab active" data-tab="timer">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M6.5 0a.5.5 0 0 0 0 1H7v1.07A7.001 7.001 0 0 0 8 16a7 7 0 0 0 5.29-11.584.531.531 0 0 0 .013-.012l.354-.354.353.354a.5.5 0 1 0 .707-.707l-1.414-1.415a.5.5 0 1 0-.707.707l.354.354-.354.354a.717.717 0 0 0-.012.012A6.973 6.973 0 0 0 9 2.071V1h.5a.5.5 0 0 0 0-1h-3zm2 5.6V9a.5.5 0 0 1-.5.5H4.5a.5.5 0 0 1 0-1h3V5.6a.5.5 0 1 1 1 0z"/>
+                </svg>
+                Pomodoro Timer
+            </button>
+            <button class="tab" data-tab="notes">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/>
+                    <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"/>
+                </svg>
+                Quick Notes
+            </button>
+            <button class="tab" data-tab="flashcards">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z"/>
+                </svg>
+                Flashcards
+            </button>
+            <button class="tab locked" data-tab="stats">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
+                </svg>
+                Advanced Stats
+            </button>
+            <button class="tab locked" data-tab="themes">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M12.433 10.07C14.133 10.585 16 11.15 16 8a8 8 0 1 0-8 8c1.996 0 1.826-1.504 1.649-3.08-.124-1.101-.252-2.237.351-2.92.465-.527 1.42-.237 2.433.07zM8 5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm4.5 3a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5 6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                </svg>
+                Custom Themes
+            </button>
+            <button class="tab locked" data-tab="tasks">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M2.5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-11zm5.21 9.854-3.5 3.5a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708l1.146 1.147 3.146-3.147a.5.5 0 0 1 .708.708z"/>
+                </svg>
+                Task Manager
+            </button>
+            <button class="tab" data-tab="premium">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+                Go Premium
+            </button>
+        </div>
+
+        <!-- Pomodoro Timer Tab -->
+        <div class="tab-content active" data-content="timer">
+            <div class="timer-section">
+                <h2 class="section-title">Pomodoro Timer</h2>
+                <p class="section-description">Stay focused with 25-minute work sessions followed by short breaks.</p>
+                <div class="timer-display" id="timerDisplay">25:00</div>
+                <div class="timer-controls">
+                    <button class="btn btn-primary btn-lg" id="startBtn">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                        </svg>
+                        Start
+                    </button>
+                    <button class="btn btn-secondary btn-lg" id="pauseBtn">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+                        </svg>
+                        Pause
+                    </button>
+                    <button class="btn btn-secondary btn-lg" id="resetBtn">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                        </svg>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Tab -->
+        <div class="tab-content" data-content="notes">
+            <h2 class="section-title">Quick Notes</h2>
+            <p class="section-description">Capture your thoughts, ideas, and study materials in one place.</p>
+            <div class="notes-container">
+                <textarea class="notes-area" id="notesArea" placeholder="Start typing your notes here..."></textarea>
+                <button class="btn btn-primary btn-lg mt-lg" id="saveNotesBtn">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+                    </svg>
+                    Save Notes
+                </button>
+            </div>
+        </div>
+
+        <!-- Flashcards Tab -->
+        <div class="tab-content" data-content="flashcards">
+            <div class="flashcard-container">
+                <h2 class="section-title">Flashcards</h2>
+                <p class="section-description">Test your knowledge with interactive flashcards. Click to reveal the answer!</p>
+                <div class="flashcard" id="flashcard">
+                    <p id="flashcardText">What is the capital of France?</p>
+                </div>
+                <div class="flashcard-controls">
+                    <button class="btn btn-primary btn-lg" id="flipCard">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                        </svg>
+                        Flip Card
+                    </button>
+                    <button class="btn btn-secondary btn-lg" id="nextCard">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                        </svg>
+                        Next Card
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Stats Tab (Premium) -->
+        <div class="tab-content" data-content="stats">
+            <h2 class="section-title">Advanced Statistics</h2>
+            <p class="section-description">Track your progress and productivity with detailed analytics.</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Study Sessions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">12h</div>
+                    <div class="stat-label">Total Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">89%</div>
+                    <div class="stat-label">Productivity Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+            <div class="premium-feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-content">
+                        <h3>Detailed Analytics</h3>
+                        <p>Visualize your study patterns with comprehensive charts and graphs.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-content">
+                        <h3>Goal Tracking</h3>
+                        <p>Set and monitor your learning objectives with precision.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-content">
+                        <h3>Performance Insights</h3>
+                        <p>Get personalized recommendations to improve your study habits.</p>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Notes Tab -->
-            <div class="tab-content" data-content="notes">
-                <h2>Quick Notes</h2>
-                <p style="margin-bottom: 15px;">Write down your thoughts and study notes here.</p>
-                <textarea class="notes-area" id="notesArea" placeholder="Start typing your notes..."></textarea>
-                <button class="btn btn-primary" style="margin-top: 15px;" id="saveNotesBtn">Save Notes</button>
+        <!-- Custom Themes Tab (Premium) -->
+        <div class="tab-content" data-content="themes">
+            <h2 class="section-title">Custom Themes</h2>
+            <p class="section-description">Personalize your workspace with beautiful color themes.</p>
+            <div class="theme-grid">
+                <div class="theme-option" style="background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);" title="Ocean Blue"></div>
+                <div class="theme-option" style="background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);" title="Purple Dream"></div>
+                <div class="theme-option" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);" title="Forest Green"></div>
+                <div class="theme-option" style="background: linear-gradient(135deg, #dc2626 0%, #f87171 100%);" title="Sunset Red"></div>
+                <div class="theme-option" style="background: linear-gradient(135deg, #ea580c 0%, #fb923c 100%);" title="Warm Orange"></div>
+                <div class="theme-option" style="background: linear-gradient(135deg, #0891b2 0%, #22d3ee 100%);" title="Turquoise"></div>
             </div>
+        </div>
 
-            <!-- Flashcards Tab -->
-            <div class="tab-content" data-content="flashcards">
-                <div class="flashcard-container">
-                    <h2>Flashcards</h2>
-                    <p style="margin-bottom: 20px;">Click the card to flip!</p>
-                    <div class="flashcard" id="flashcard">
-                        <p id="flashcardText">What is the capital of France?</p>
-                    </div>
-                    <div class="flashcard-controls">
-                        <button class="btn btn-primary" id="flipCard">Flip Card</button>
-                        <button class="btn btn-secondary" id="nextCard">Next Card</button>
-                    </div>
-                </div>
+        <!-- Task Manager Tab (Premium) -->
+        <div class="tab-content" data-content="tasks">
+            <h2 class="section-title">Task Manager</h2>
+            <p class="section-description">Organize your study tasks and assignments efficiently.</p>
+            <div class="task-input-group">
+                <input type="text" class="task-input" id="taskInput" placeholder="What do you need to do?">
+                <button class="btn btn-primary btn-lg" id="addTaskBtn">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                    </svg>
+                    Add Task
+                </button>
             </div>
+            <ul class="task-list" id="taskList">
+                <li class="task-item">
+                    <input type="checkbox">
+                    <span>Review calculus notes for midterm exam</span>
+                </li>
+                <li class="task-item">
+                    <input type="checkbox">
+                    <span>Complete chemistry lab report by Friday</span>
+                </li>
+                <li class="task-item">
+                    <input type="checkbox">
+                    <span>Read chapters 5-7 for literature class</span>
+                </li>
+            </ul>
+        </div>
 
-            <!-- Advanced Stats Tab (Premium) -->
-            <div class="tab-content" data-content="stats">
-                <h2>Advanced Statistics</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value">24</div>
-                        <div class="stat-label">Study Sessions</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">12h</div>
-                        <div class="stat-label">Total Time</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">89%</div>
-                        <div class="stat-label">Productivity</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">7</div>
-                        <div class="stat-label">Day Streak</div>
-                    </div>
+        <!-- Premium Tab -->
+        <div class="tab-content" data-content="premium">
+            <div class="premium-section">
+                <div class="modal-icon">⭐</div>
+                <h2 class="premium-title">Unlock Premium Features</h2>
+                <p class="premium-description">Get access to advanced analytics, custom themes, task management, and more to supercharge your productivity.</p>
+                
+                <div class="promo-form">
+                    <input type="text" class="promo-input" id="promoInput" placeholder="Enter your promo code">
+                    <button class="btn btn-primary btn-lg" id="redeemBtn">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M2.5 8.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                        Redeem Code
+                    </button>
                 </div>
-                <div class="premium-feature">
-                    <h3>📈 Detailed Analytics</h3>
-                    <p>Track your progress over time with detailed charts and insights.</p>
-                </div>
-            </div>
 
-            <!-- Custom Themes Tab (Premium) -->
-            <div class="tab-content" data-content="themes">
-                <h2>Custom Themes</h2>
-                <p style="margin-bottom: 20px;">Choose your favorite theme to personalize your experience.</p>
-                <div class="theme-picker">
-                    <div class="theme-option" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
-                    <div class="theme-option" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                    <div class="theme-option" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
-                    <div class="theme-option" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
-                    <div class="theme-option" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
-                    <div class="theme-option" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
-                </div>
-            </div>
-
-            <!-- Task Manager Tab (Premium) -->
-            <div class="tab-content" data-content="tasks">
-                <h2>Task Manager</h2>
-                <div style="margin-bottom: 20px;">
-                    <input type="text" id="taskInput" placeholder="Add a new task..." style="padding: 10px; width: 70%; border: 2px solid #e0e0e0; border-radius: 8px;">
-                    <button class="btn btn-primary" id="addTaskBtn">Add Task</button>
-                </div>
-                <ul class="task-list" id="taskList">
-                    <li class="task-item">
-                        <input type="checkbox">
-                        <span>Review calculus notes</span>
-                    </li>
-                    <li class="task-item">
-                        <input type="checkbox">
-                        <span>Complete chemistry homework</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Premium Tab -->
-            <div class="tab-content" data-content="premium">
-                <div class="promo-section">
-                    <h2 style="margin-bottom: 20px;">🚀 Unlock Premium Features</h2>
-                    <p style="margin-bottom: 30px; font-size: 1.1rem;">Get access to Advanced Stats, Custom Themes, Task Manager, Export Tools, and more!</p>
-                    
-                    <div style="margin-bottom: 30px;">
-                        <input type="text" class="promo-input" id="promoInput" placeholder="Enter promo code">
-                        <button class="btn btn-primary" id="redeemBtn">Redeem Code</button>
-                    </div>
-
-                    <div style="border-top: 2px solid rgba(255,255,255,0.3); padding-top: 30px;">
-                        <h3 style="margin-bottom: 15px;">Don't have a code?</h3>
-                        <p style="margin-bottom: 20px;">Purchase premium access for just $250!</p>
-                        <button class="btn" style="background: white; color: #333; font-size: 1.1rem;" id="purchaseBtn">
-                            💳 Purchase Premium - $250
-                        </button>
-                    </div>
+                <div class="premium-divider">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Don't have a promo code?</h3>
+                    <p style="margin-bottom: 1.5rem; opacity: 0.95;">Purchase premium access for just $250 and unlock all features.</p>
+                    <button class="btn btn-lg" style="background: white; color: #1e3a8a; font-weight: 700; font-size: 1.125rem;" id="purchaseBtn">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </svg>
+                        Purchase Premium - $250
+                    </button>
                 </div>
             </div>
         </div>
@@ -506,24 +999,43 @@
     <!-- Modal for maintenance message -->
     <div class="modal" id="maintenanceModal">
         <div class="modal-content">
-            <h2>🔧 Under Maintenance</h2>
-            <p style="margin: 20px 0; color: #666;">Our payment system is currently undergoing maintenance. Please try again later or contact us for a promo code!</p>
-            <button class="close-modal" id="closeMaintenanceModal">Close</button>
+            <div class="modal-icon">🔧</div>
+            <h2 class="modal-title">Under Maintenance</h2>
+            <p class="modal-description">Our payment system is currently undergoing maintenance. Please try again later or contact us for a promo code.</p>
+            <button class="btn btn-primary btn-lg" id="closeMaintenanceModal">Close</button>
         </div>
     </div>
 
     <!-- Modal for success message -->
     <div class="modal" id="successModal">
         <div class="modal-content">
-            <h2>🎉 Welcome to Premium!</h2>
-            <p style="margin: 20px 0; color: #666;">Your promo code has been successfully activated. Enjoy all premium features!</p>
-            <button class="close-modal" id="closeSuccessModal">Start Exploring</button>
+            <div class="modal-icon">🎉</div>
+            <h2 class="modal-title">Welcome to Premium!</h2>
+            <p class="modal-description">Your promo code has been successfully activated. Enjoy all premium features and elevate your study experience!</p>
+            <button class="btn btn-primary btn-lg" id="closeSuccessModal">Start Exploring</button>
         </div>
     </div>
 
     <script>
+        // Check if premium is already active
+        function isPremium() {
+            return localStorage.getItem('kogniaPremium') === 'true';
+        }
+
+        // Check if a specific code has already been redeemed
+        function isCodeUsed(code) {
+            const usedCodes = JSON.parse(localStorage.getItem('kogniaUsedCodes') || '[]');
+            return usedCodes.includes(code.toUpperCase().trim());
+        }
+
+        // Mark a code as used
+        function markCodeAsUsed(code) {
+            const usedCodes = JSON.parse(localStorage.getItem('kogniaUsedCodes') || '[]');
+            usedCodes.push(code.toUpperCase().trim());
+            localStorage.setItem('kogniaUsedCodes', JSON.stringify(usedCodes));
+        }
+
         // Promo code validation system
-        // Valid codes follow pattern: KOG-XXXXX-YY where YY is checksum
         function validatePromoCode(code) {
             code = code.toUpperCase().trim();
             
@@ -557,8 +1069,13 @@
             });
             
             if (premium) {
-                document.getElementById('premiumBadge').style.display = 'inline-block';
+                document.getElementById('premiumBadge').style.display = 'block';
             }
+        }
+
+        // Scroll to features
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
         }
 
         // Tab switching
@@ -600,7 +1117,7 @@
                     } else {
                         clearInterval(timerInterval);
                         isRunning = false;
-                        alert('⏰ Time\'s up! Take a break!');
+                        alert('⏰ Time\'s up! Great work! Take a 5-minute break.');
                     }
                 }, 1000);
             }
@@ -633,7 +1150,7 @@
             { front: 'What is 2 + 2?', back: '4' },
             { front: 'Who wrote Romeo and Juliet?', back: 'William Shakespeare' },
             { front: 'What is the largest planet?', back: 'Jupiter' },
-            { front: 'What year did WWI start?', back: '1914' }
+            { front: 'What year did World War I start?', back: '1914' }
         ];
 
         let currentCard = 0;
@@ -699,29 +1216,22 @@
             }
         });
 
+        // Enter key support for task input
+        document.getElementById('taskInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('addTaskBtn').click();
+            }
+        });
+
+        // Enter key support for promo code input
+        document.getElementById('promoInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('redeemBtn').click();
+            }
+        });
+
         // Initialize
         updatePremiumUI();
-
-        // Log the valid promo code to console for testing
-        console.log('The valid promo code is: KOGNIA25');
-
-        // Check if premium is already active
-        function isPremium() {
-            return localStorage.getItem('kogniaPremium') === 'true';
-        }
-
-        // Check if a specific code has already been redeemed
-        function isCodeUsed(code) {
-            const usedCodes = JSON.parse(localStorage.getItem('kogniaUsedCodes') || '[]');
-            return usedCodes.includes(code.toUpperCase().trim());
-        }
-
-        // Mark a code as used
-        function markCodeAsUsed(code) {
-            const usedCodes = JSON.parse(localStorage.getItem('kogniaUsedCodes') || '[]');
-            usedCodes.push(code.toUpperCase().trim());
-            localStorage.setItem('kogniaUsedCodes', JSON.stringify(usedCodes));
-        }
     </script>
 </body>
 </html>
