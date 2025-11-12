@@ -851,28 +851,7 @@
 
         <!-- Flashcards Tab -->
         <div class="tab-content" data-content="flashcards">
-            <div class="flashcard-container">
-                <h2 class="section-title">Flashcards</h2>
-                <p class="section-description">Test your knowledge with interactive flashcards. Click to reveal the answer!</p>
-                <div class="flashcard" id="flashcard">
-                    <p id="flashcardText">What is the capital of France?</p>
-                </div>
-                <div class="flashcard-controls">
-                    <button class="btn btn-primary btn-lg" id="flipCard">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
-                            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
-                        </svg>
-                        Flip Card
-                    </button>
-                    <button class="btn btn-secondary btn-lg" id="nextCard">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
-                        </svg>
-                        Next Card
-                    </button>
-                </div>
-            </div>
+            <!-- Flashcard UI will be rendered by JavaScript -->
         </div>
 
         <!-- Advanced Stats Tab (Premium) -->
@@ -968,31 +947,7 @@
         <!-- Premium Tab -->
         <div class="tab-content" data-content="premium">
             <div class="premium-section" id="premiumSection">
-                <!-- Show promo code entry form -->
-                <div class="modal-icon">⭐</div>
-                <h2 class="premium-title">Unlock Premium Features</h2>
-                <p class="premium-description">Get access to advanced analytics, custom themes, task management, and more to supercharge your productivity.</p>
-                
-                <div class="promo-form">
-                    <input type="text" class="promo-input" id="promoInput" placeholder="Enter your promo code">
-                    <button class="btn btn-primary btn-lg" id="redeemBtn">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M2.5 8.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                        </svg>
-                        Redeem Code
-                    </button>
-                </div>
-
-                <div class="premium-divider">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Don't have a promo code?</h3>
-                    <p style="margin-bottom: 1.5rem; opacity: 0.95;">Purchase premium access for just $250 and unlock all features.</p>
-                    <button class="btn btn-lg" style="background: white; color: #1e3a8a; font-weight: 700; font-size: 1.125rem;" id="purchaseBtn">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                        </svg>
-                        Purchase Premium - $250
-                    </button>
-                </div>
+                <!-- Content will be dynamically loaded by JavaScript -->
             </div>
         </div>
     </div>
@@ -1059,6 +1014,7 @@
             markCodeAsUsed(code);
             updatePremiumUI();
             updatePremiumSection();
+            trackSession('Premium Activated');
         }
 
         function updatePremiumSection() {
@@ -1066,6 +1022,7 @@
             const premium = isPremium();
             
             if (premium) {
+                premiumSection.style.textAlign = 'center';
                 // Show premium active message
                 premiumSection.innerHTML = `
                     <div class="modal-icon">✅</div>
@@ -1098,6 +1055,7 @@
                 `;
             } else {
                 // Show promo code entry form
+                premiumSection.style.textAlign = 'center';
                 premiumSection.innerHTML = `
                     <div class="modal-icon">⭐</div>
                     <h2 class="premium-title">Unlock Premium Features</h2>
@@ -1200,10 +1158,64 @@
             });
         });
 
+        function getStudySessions() {
+            return JSON.parse(localStorage.getItem('kogniaStudySessions') || '[]');
+        }
+
+        function trackSession(type, duration = 0) {
+            const sessions = getStudySessions();
+            sessions.push({
+                type: type,
+                duration: duration,
+                timestamp: new Date().toISOString(),
+                date: new Date().toISOString().split('T')[0]
+            });
+            localStorage.setItem('kogniaStudySessions', JSON.stringify(sessions));
+            updateStats();
+        }
+
+        function updateStats() {
+            const sessions = getStudySessions();
+            const totalSessions = sessions.filter(s => s.type === 'Pomodoro').length;
+            const totalMinutes = sessions.reduce((acc, s) => acc + (s.duration || 0), 0);
+            const totalHours = Math.floor(totalMinutes / 60);
+            const totalHoursDisplay = totalHours > 0 ? totalHours + 'h' : Math.floor(totalMinutes) + 'm';
+            
+            // Calculate streak
+            const dates = [...new Set(sessions.map(s => s.date))].sort().reverse();
+            let streak = 0;
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (dates.length > 0) {
+                for (let i = 0; i < dates.length; i++) {
+                    const expectedDate = new Date();
+                    expectedDate.setDate(expectedDate.getDate() - i);
+                    const expectedDateStr = expectedDate.toISOString().split('T')[0];
+                    
+                    if (dates[i] === expectedDateStr) {
+                        streak++;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            
+            // Calculate productivity score (percentage of completed sessions)
+            const completedSessions = sessions.filter(s => s.duration >= 25).length;
+            const productivityScore = totalSessions > 0 ? Math.round((completedSessions / totalSessions) * 100) : 0;
+            
+            // Update stat cards
+            document.querySelector('.stat-card:nth-child(1) .stat-value').textContent = totalSessions;
+            document.querySelector('.stat-card:nth-child(2) .stat-value').textContent = totalHoursDisplay;
+            document.querySelector('.stat-card:nth-child(3) .stat-value').textContent = productivityScore + '%';
+            document.querySelector('.stat-card:nth-child(4) .stat-value').textContent = streak;
+        }
+
         // Pomodoro Timer
         let timerInterval;
         let timeLeft = 25 * 60;
         let isRunning = false;
+        let sessionStartTime = 0;
 
         function updateTimerDisplay() {
             const minutes = Math.floor(timeLeft / 60);
@@ -1215,6 +1227,7 @@
         document.getElementById('startBtn').addEventListener('click', () => {
             if (!isRunning) {
                 isRunning = true;
+                sessionStartTime = Date.now();
                 timerInterval = setInterval(() => {
                     if (timeLeft > 0) {
                         timeLeft--;
@@ -1222,6 +1235,7 @@
                     } else {
                         clearInterval(timerInterval);
                         isRunning = false;
+                        trackSession('Pomodoro', 25);
                         alert('⏰ Time\'s up! Great work! Take a 5-minute break.');
                     }
                 }, 1000);
@@ -1249,34 +1263,155 @@
             alert('✅ Notes saved successfully!');
         });
 
-        // Flashcards
-        const flashcards = [
-            { front: 'What is the capital of France?', back: 'Paris' },
-            { front: 'What is 2 + 2?', back: '4' },
-            { front: 'Who wrote Romeo and Juliet?', back: 'William Shakespeare' },
-            { front: 'What is the largest planet?', back: 'Jupiter' },
-            { front: 'What year did World War I start?', back: '1914' }
-        ];
+        function getUserFlashcards() {
+            const saved = localStorage.getItem('kogniaFlashcards');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            // Default flashcards for first-time users
+            return [
+                { front: 'What is the capital of France?', back: 'Paris' },
+                { front: 'What is 2 + 2?', back: '4' },
+                { front: 'Who wrote Romeo and Juliet?', back: 'William Shakespeare' }
+            ];
+        }
 
+        function saveUserFlashcards(flashcards) {
+            localStorage.setItem('kogniaFlashcards', JSON.stringify(flashcards));
+        }
+
+        let flashcards = getUserFlashcards();
         let currentCard = 0;
         let isFlipped = false;
 
         function updateFlashcard() {
+            if (flashcards.length === 0) {
+                document.getElementById('flashcardText').textContent = 'No flashcards yet. Add your first flashcard below!';
+                return;
+            }
             const card = flashcards[currentCard];
             document.getElementById('flashcardText').textContent = isFlipped ? card.back : card.front;
         }
 
-        document.getElementById('flipCard').addEventListener('click', () => {
+        function renderFlashcardUI() {
+            const container = document.querySelector('[data-content="flashcards"]');
+            container.innerHTML = `
+                <div class="flashcard-container">
+                    <h2 class="section-title">Flashcards</h2>
+                    <p class="section-description">Create your own flashcards to test your knowledge. Click to flip!</p>
+                    
+                    <!-- Add flashcard form -->
+                    <div style="background: var(--color-background); padding: var(--spacing-lg); border-radius: var(--radius-lg); margin-bottom: var(--spacing-xl); border: 1px solid var(--color-border);">
+                        <h3 style="margin-bottom: var(--spacing-md); font-size: 1.125rem; font-weight: 600;">Create New Flashcard</h3>
+                        <input type="text" id="flashcardFront" placeholder="Front (Question)" style="width: 100%; padding: var(--spacing-sm); margin-bottom: var(--spacing-sm); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: 1rem;">
+                        <input type="text" id="flashcardBack" placeholder="Back (Answer)" style="width: 100%; padding: var(--spacing-sm); margin-bottom: var(--spacing-md); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: 1rem;">
+                        <button class="btn btn-primary" id="addFlashcardBtn">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                            </svg>
+                            Add Flashcard
+                        </button>
+                    </div>
+                    
+                    <div class="flashcard" id="flashcard" onclick="flipCard()">
+                        <p id="flashcardText">What is the capital of France?</p>
+                    </div>
+                    <div class="flashcard-controls">
+                        <button class="btn btn-secondary btn-lg" id="prevCard">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                            Previous
+                        </button>
+                        <button class="btn btn-primary btn-lg" id="flipCard">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                            </svg>
+                            Flip Card
+                        </button>
+                        <button class="btn btn-secondary btn-lg" id="nextCard">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                            </svg>
+                            Next
+                        </button>
+                        <button class="btn btn-secondary" id="deleteCard" style="background: #ef4444; color: white; border: none;">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            </svg>
+                            Delete
+                        </button>
+                    </div>
+                    <p style="text-align: center; color: var(--color-text-muted); margin-top: var(--spacing-md); font-size: 0.875rem;">Card ${currentCard + 1} of ${flashcards.length}</p>
+                </div>
+            `;
+            
+            updateFlashcard();
+            attachFlashcardListeners();
+        }
+
+        function attachFlashcardListeners() {
+            document.getElementById('addFlashcardBtn').addEventListener('click', () => {
+                const front = document.getElementById('flashcardFront').value.trim();
+                const back = document.getElementById('flashcardBack').value.trim();
+                
+                if (front && back) {
+                    flashcards.push({ front, back });
+                    saveUserFlashcards(flashcards);
+                    currentCard = flashcards.length - 1;
+                    document.getElementById('flashcardFront').value = '';
+                    document.getElementById('flashcardBack').value = '';
+                    renderFlashcardUI();
+                    alert('✅ Flashcard added successfully!');
+                } else {
+                    alert('❌ Please fill in both front and back of the flashcard.');
+                }
+            });
+            
+            document.getElementById('flipCard').addEventListener('click', () => {
+                isFlipped = !isFlipped;
+                updateFlashcard();
+            });
+            
+            document.getElementById('nextCard').addEventListener('click', () => {
+                if (flashcards.length > 0) {
+                    currentCard = (currentCard + 1) % flashcards.length;
+                    isFlipped = false;
+                    updateFlashcard();
+                    renderFlashcardUI();
+                }
+            });
+            
+            document.getElementById('prevCard').addEventListener('click', () => {
+                if (flashcards.length > 0) {
+                    currentCard = currentCard === 0 ? flashcards.length - 1 : currentCard - 1;
+                    isFlipped = false;
+                    updateFlashcard();
+                    renderFlashcardUI();
+                }
+            });
+            
+            document.getElementById('deleteCard').addEventListener('click', () => {
+                if (flashcards.length > 0 && confirm('Are you sure you want to delete this flashcard?')) {
+                    flashcards.splice(currentCard, 1);
+                    saveUserFlashcards(flashcards);
+                    if (currentCard >= flashcards.length) {
+                        currentCard = Math.max(0, flashcards.length - 1);
+                    }
+                    isFlipped = false;
+                    renderFlashcardUI();
+                }
+            });
+        }
+
+        function flipCard() {
             isFlipped = !isFlipped;
             updateFlashcard();
-        });
+        }
 
-        document.getElementById('nextCard').addEventListener('click', () => {
-            currentCard = (currentCard + 1) % flashcards.length;
-            isFlipped = false;
-            updateFlashcard();
-        });
-
+        // Theme picker with click functionality
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('theme-option')) {
                 const gradient = e.target.style.background;
@@ -1328,6 +1463,8 @@
         // Initialize
         updatePremiumUI();
         updatePremiumSection();
+        renderFlashcardUI();
+        updateStats();
     </script>
 </body>
 </html>
