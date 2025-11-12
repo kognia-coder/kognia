@@ -450,6 +450,43 @@
             padding: var(--spacing-2xl);
             color: white;
             text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .premium-feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+
+        .premium-feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .premium-feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-md);
+            display: inline-block;
+        }
+
+        .premium-feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: white;
+        }
+
+        .premium-feature-desc {
+            font-size: 0.9375rem;
+            opacity: 0.9;
+            line-height: 1.5;
         }
 
         .premium-title {
@@ -1022,33 +1059,29 @@
             const premium = isPremium();
             
             if (premium) {
-                premiumSection.style.textAlign = 'center';
-                // Show premium active message
                 premiumSection.innerHTML = `
-                    <div class="modal-icon">✅</div>
-                    <h2 class="premium-title">Premium Active</h2>
-                    <p class="premium-description">You have successfully unlocked all premium features! Enjoy advanced statistics, custom themes, and task management tools.</p>
-                    
-                    <div class="premium-feature-list">
-                        <div class="feature-item">
-                            <div class="feature-icon">📊</div>
-                            <div class="feature-content">
-                                <h3>Advanced Statistics</h3>
-                                <p>Track your study progress with detailed analytics and productivity insights.</p>
+                    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                        <div class="modal-icon" style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+                        <h2 class="premium-title" style="font-size: 2rem; margin-bottom: 1rem;">Premium Active</h2>
+                        <p class="premium-description" style="font-size: 1.125rem; margin-bottom: 2rem; opacity: 0.9; line-height: 1.6;">
+                            You have successfully unlocked all premium features! Enjoy advanced statistics, custom themes, and task management tools.
+                        </p>
+                        
+                        <div class="premium-feature-grid">
+                            <div class="premium-feature-card">
+                                <div class="premium-feature-icon">📊</div>
+                                <h3 class="premium-feature-title">Advanced Statistics</h3>
+                                <p class="premium-feature-desc">Track your study progress with detailed analytics and productivity insights.</p>
                             </div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🎨</div>
-                            <div class="feature-content">
-                                <h3>Custom Themes</h3>
-                                <p>Personalize your workspace with beautiful color themes.</p>
+                            <div class="premium-feature-card">
+                                <div class="premium-feature-icon">🎨</div>
+                                <h3 class="premium-feature-title">Custom Themes</h3>
+                                <p class="premium-feature-desc">Personalize your workspace with beautiful color themes.</p>
                             </div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">✅</div>
-                            <div class="feature-content">
-                                <h3>Task Manager</h3>
-                                <p>Organize your study tasks and assignments efficiently.</p>
+                            <div class="premium-feature-card">
+                                <div class="premium-feature-icon">✅</div>
+                                <h3 class="premium-feature-title">Task Manager</h3>
+                                <p class="premium-feature-desc">Organize your study tasks and assignments efficiently.</p>
                             </div>
                         </div>
                     </div>
@@ -1057,9 +1090,11 @@
                 // Show promo code entry form
                 premiumSection.style.textAlign = 'center';
                 premiumSection.innerHTML = `
-                    <div class="modal-icon">⭐</div>
-                    <h2 class="premium-title">Unlock Premium Features</h2>
-                    <p class="premium-description">Get access to advanced analytics, custom themes, task management, and more to supercharge your productivity.</p>
+                    <div class="modal-icon" style="font-size: 4rem; margin-bottom: 1rem;">⭐</div>
+                    <h2 class="premium-title" style="font-size: 2rem; margin-bottom: 1rem;">Unlock Premium Features</h2>
+                    <p class="premium-description" style="font-size: 1.125rem; margin-bottom: 2rem; opacity: 0.9; line-height: 1.6;">
+                        Get access to advanced analytics, custom themes, task management, and more to supercharge your productivity.
+                    </p>
                     
                     <div class="promo-form">
                         <input type="text" class="promo-input" id="promoInput" placeholder="Enter your promo code">
@@ -1138,7 +1173,10 @@
 
         // Scroll to features
         function scrollToFeatures() {
-            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+            const featuresSection = document.getElementById('features');
+            if (featuresSection) {
+                featuresSection.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         // Tab switching
@@ -1325,7 +1363,7 @@
                         </button>
                         <button class="btn btn-primary btn-lg" id="flipCard">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                                <path d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
                                 <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
                             </svg>
                             Flip Card
